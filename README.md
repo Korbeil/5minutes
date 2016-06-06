@@ -55,7 +55,7 @@ If you are wondering what it does, here it is:
 - Adds specified public key in variable `user_public_keys` in ssh authorized_keys.
 - Disables root SSH access. Yes, from next time you need to use new user to access server.
 - Disables password authentication. Again you will need to use new user with SSH public key auth method.
-- Installs `ufw` as firewall, `fail2ban` to ban IPs that show malicious signs, `logwatch` to analyze and report logs.
+- Installs `iptables` as firewall, `fail2ban` to ban IPs that show malicious signs, `logwatch` to analyze and report logs.
 - It also installs `unattended-upgrades` to enable automatic security updates.
 
 
@@ -66,8 +66,8 @@ There are few other variables that you need/might want to change. See `vars:` de
 - `server_user_name`: default `trinity`
 - `server_user_password`: Please change this. See [Ansible docs][3]
 - `logwatch_email`: default `devops@example.com`, you won't get report email from `logwatch` if you don't change.
-- `user_public_keys`: default `~/.ssh/id_rsa.pub`, if you use different key pair name, you need to change this path
- to public key file.
+- `user_public_keys`: default `~/.ssh/id_rsa.pub`, if you use different key pair name, you need to change this path to public key file.
+- You can watch at https://galaxy.ansible.com/geerlingguy/firewall/ to customize `iptables` configuration since we only do a minimal setup. After the role is run, a firewall init service will be available on the server. You can use service firewall [start|stop|restart|status] to control the firewall.
 
 Ansible is perfect for this automation because it's dead simple to install and use without having to learn it.    
 It uses SSH as agent, so you don't need to setup anything else.

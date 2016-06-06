@@ -9,12 +9,13 @@ user_public_keys:
   - ~/.ssh/id_rsa.pub
 
 required_packages:
-  - ufw
+  - iptables
   - fail2ban
   - unattended-upgrades
   - logwatch
 
-ufw_allowed_ports:
+firewall_allowed_tcp_ports:
   - 22
   - 80
   - 443
+firewall_allowed_udp_ports: []

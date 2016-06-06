@@ -40,15 +40,6 @@
       with_items: 
       - "{{ required_packages }}"
 
-    # Allow only ssh and http(s) ports
-    - name: Allow ssh and http(s) connections
-      ufw: rule=allow port={{ item }}
-      with_items:
-        - "{{ ufw_allowed_ports }}"
-
-    - name: Enable ufw/firewall
-      ufw: state=enabled policy=deny
-
     - name: Set up Postfix to relay mail
       debconf: name=postfix
                question='{{ item.question }}'
@@ -63,6 +54,10 @@
                   regexp="^/usr/sbin/logwatch"
                   line="/usr/sbin/logwatch --output mail --mailto {{ logwatch_email }} --detail high"
                   state=present create=yes
+
+  roles:
+    - { role: geerlingguy.firewall }
+
   handlers:
     - name: Restart ssh
       service: name=ssh state=restarted
